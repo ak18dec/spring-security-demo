@@ -31,6 +31,9 @@ public class WebSecurity {
     @Autowired
     JwtAuthenticationProvider jwtAuthenticationProvider;
 
+    @Autowired
+    GoogleCloudAuthenticationProvider googleCloudAuthenticationProvider;
+
 
 
 //    @Bean
@@ -43,7 +46,8 @@ public class WebSecurity {
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        builder.authenticationProvider(jwtAuthenticationProvider);
+        builder.authenticationProvider(jwtAuthenticationProvider)
+                .authenticationProvider(googleCloudAuthenticationProvider);
         return builder.build();
     }
 
