@@ -18,9 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurity {
 
-    @Qualifier("userDetailsServiceImpl")
-    @Autowired
-    UserDetailsService userDetailsService;
+//    @Qualifier("userDetailsServiceImpl")
+//    @Autowired
+//    UserDetailsService userDetailsService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -28,12 +28,22 @@ public class WebSecurity {
     @Autowired
     JwtTokenFilter jwtTokenFilter;
 
+    @Autowired
+    JwtAuthenticationProvider jwtAuthenticationProvider;
 
+
+
+//    @Bean
+//    AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+//        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+//        builder.userDetailsService(userDetailsService).passwordEncoder(encoder);
+//        return builder.build();
+//    }
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        builder.userDetailsService(userDetailsService).passwordEncoder(encoder);
+        builder.authenticationProvider(jwtAuthenticationProvider);
         return builder.build();
     }
 
